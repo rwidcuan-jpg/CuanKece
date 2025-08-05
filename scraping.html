@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Scraping Demo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap');
+
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(120deg, #f9c94e 60%, #fff 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .result {
+            background: #181818;
+            border-radius: 18px;
+            padding: 32px 32px 24px 32px;
+            max-width: 600px;
+            margin: 60px auto 32px auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result::before {
+            content: "";
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #f9c94e 60%, transparent 100%);
+            opacity: 0.25;
+            z-index: 0;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
+            color: #f9c94e;
+            z-index: 1;
+            position: relative;
+        }
+
+        button {
+            background: linear-gradient(90deg, #f9c94e 60%, #ffde7a 100%);
+            color: #181818;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 24px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+            z-index: 1;
+            position: relative;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        button:hover:enabled {
+            background: #181818;
+            color: #f9c94e;
+            transform: scale(1.05);
+            border: 2px solid #f9c94e;
+        }
+
+        .steps-box {
+            background: #fff;
+            color: #181818;
+            border-radius: 14px;
+            padding: 28px 24px 18px 24px;
+            margin-top: 18px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+            animation: fadeIn 0.7s;
+        }
+
+        .steps-box h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #f9c94e;
+        }
+
+        .steps-box ol {
+            margin: 0 0 0 18px;
+            padding: 0;
+        }
+
+        .steps-box li {
+            margin-bottom: 14px;
+            font-size: 1.07rem;
+            line-height: 1.6;
+        }
+
+        .steps-box li::marker {
+            color: #f9c94e;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .result {
+                padding: 18px 6vw 18px 6vw;
+                max-width: 98vw;
+            }
+
+            .steps-box {
+                padding: 18px 6vw 12px 6vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="result">
+        <h1>Web Scraping dengan Browser</h1>
+        <button id="showStepsBtn" aria-label="Tampilkan Langkah-langkah">Tampilkan Langkah-langkah</button>
+        <div id="steps"></div>
+    </section>
+
+    <script>
+        function showSteps() {
+            const steps = `
+                <div class="steps-box">
+                    <h2>Berikut langkah-langkah umum untuk melakukan web scraping menggunakan aplikasi browser:</h2>
+                    <ol>
+                        <li><b>Pilih dan pasang alat scraping:</b><br>
+                            Ada berbagai alat dan ekstensi browser yang tersedia untuk web scraping, seperti Web Scraper Chrome. Pilih alat yang sesuai dengan kebutuhan Anda dan pasang di browser Anda.
+                        </li>
+                        <li><b>Identifikasi data yang ingin di-scrape:</b><br>
+                            Buka halaman web yang ingin di-scrape dan periksa struktur HTML-nya menggunakan fitur "Inspect" atau "Inspect Element" pada browser. Identifikasi tag HTML dan atribut yang berisi data yang ingin Anda ambil.
+                        </li>
+                        <li><b>Buat peta situs (sitemap):</b><br>
+                            Alat scraping biasanya memiliki fitur untuk membuat "sitemap" yang berisi instruksi tentang bagaimana menavigasi situs web dan mengekstrak data.
+                        </li>
+                        <li><b>Tentukan elemen data:</b><br>
+                            Dalam sitemap, Anda akan menentukan elemen HTML yang berisi data yang ingin Anda scrape. Anda bisa memilih elemen tunggal atau beberapa elemen (misalnya, semua gambar pada halaman).
+                        </li>
+                        <li><b>Jalankan proses scraping:</b><br>
+                            Setelah sitemap selesai, Anda bisa memulai proses scraping. Alat akan secara otomatis mengunjungi halaman web, mengekstrak data sesuai instruksi dalam sitemap, dan menyimpannya.
+                        </li>
+                        <li><b>Ekstrak atau simpan data:</b><br>
+                            Hasil scraping biasanya dapat diekstraksi dalam format CSV, JSON, atau format lainnya, tergantung pada alat yang digunakan.
+                        </li>
+                    </ol>
+                    <div style="margin-top:28px; text-align:center;">
+                        <h3 style="color:#f9c94e;">Video Tutorial Web Scraping dengan Browser</h3>
+                        
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Gbkkugqm89A?si=sirETqQYlE7HmiuE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+            `;
+            document.getElementById('steps').innerHTML = steps;
+            document.getElementById('showStepsBtn').disabled = true;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('showStepsBtn').addEventListener('click', showSteps);
+        });
+    </script>
+</body>
+
+</html>
